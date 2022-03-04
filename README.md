@@ -35,7 +35,7 @@
   - belongs_to :user
   - has_one :purchase_info
 
-## purchase_info TABLE
+## purchase_infos TABLE
 
 |Column|Type|Options|
 |-|-|-|
@@ -47,7 +47,7 @@
   - belongs_to :item
   - has_one :delivery_info
 
-## delivery_info TABLE
+## delivery_infos TABLE
 
 |Column|Type|Options|
 |-|-|-|
@@ -62,8 +62,3 @@
 ### Association
 - belongs_to :purchase_info
 
-## birth_year, birth_month, birth_day TABLE Association
-- has_many :users (active_hash)
-
-## category, condition, delivery_fee_task, prefecture, delivery_day TABLE Association
-- has_many :items (active_hash)
