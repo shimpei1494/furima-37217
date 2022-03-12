@@ -8,9 +8,10 @@ RSpec.describe User, type: :model do
   describe 'ユーザー新規登録' do
     context '新規登録できる場合' do
       it '全ての項目に正しく入力があれば登録できる' do
-
+        expect(@user).to be_valid
       end
     end
+
     context '新規登録できない場合' do
       it 'nicknameが存在しないと登録できない' do
 
@@ -42,13 +43,13 @@ RSpec.describe User, type: :model do
       it 'family_nameが存在しないと登録できない' do
       end
 
-      it 'family_nameが全角（漢字・ひらがな・カタカナ）以外では登録できない'
+      it 'family_nameが全角（漢字・ひらがな・カタカナ）以外では登録できない' do
       end
 
       it 'first_nameが存在しないと登録できない' do
       end
 
-      it 'first_nameが全角（漢字・ひらがな・カタカナ）以外では登録できない'
+      it 'first_nameが全角（漢字・ひらがな・カタカナ）以外では登録できない' do
       end
 
       it 'family_name_kanaが存在しないと登録できない' do
