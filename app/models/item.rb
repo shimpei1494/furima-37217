@@ -15,6 +15,7 @@ class Item < ApplicationRecord
   validates :delivery_fee_task_id, presence: true, numericality: {other_than: 1, message: "can't be blank"}
   validates :prefecture_id, presence: true, numericality: {other_than: 1, message: "can't be blank"}
   validates :delivery_day_id, presence: true, numericality: {other_than: 1, message: "can't be blank"}
-  validates :price, presence: true, numericality: {only_integer: true, greater_than: 299, less_than: 10000000}, format: { with: /\A[0-9]+\z/, message: '半角数字で入力してください'}
+  validates :price, presence: true, numericality: {only_integer: true, greater_than: 299, less_than: 10000000, message: '指定範囲内で入力してください'}, format: { with: /\A[0-9]+\z/, message: '半角数字で入力してください'}
+  validates :image, presence: true
 
 end
