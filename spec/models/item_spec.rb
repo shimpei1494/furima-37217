@@ -11,7 +11,7 @@ RSpec.describe Item, type: :model do
         expect(@item).to be_valid
       end
     end
-    
+
     context '投稿できない場合' do
       it "nameが空では保存できない" do
         @item.name = ''
@@ -58,8 +58,13 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Price can't be blank")
       end
-      it "価格が300〜9999999以内でないと保存できない" do
+      it "価格が299以下では保存できない" do
         @item.price = '10'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price 半角数字を指定範囲内で入力してください")
+      end
+      it "価格が10000000以上では保存できない" do
+        @item.price = '500000000'
         @item.valid?
         expect(@item.errors.full_messages).to include("Price 半角数字を指定範囲内で入力してください")
       end
@@ -72,6 +77,11 @@ RSpec.describe Item, type: :model do
         @item.price = 'Hello'
         @item.valid?
         expect(@item.errors.full_messages).to include("Price 半角数字を指定範囲内で入力してください")
+      end
+      it "ユーザー情報がないと保存できない" do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include('User must exist')
       end
     end
   end
