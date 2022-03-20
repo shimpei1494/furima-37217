@@ -2,7 +2,6 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index]
 
   def index
-    @item_exist = Item.exists?
     @items = Item.order(created_at: "DESC").includes(:user)
   end
 
