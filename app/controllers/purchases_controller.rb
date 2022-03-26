@@ -1,7 +1,13 @@
 class PurchasesController < ApplicationController
+  before_action :authenticate_user!, only: :index
+
   def index
     @item = Item.find(params[:item_id])
-    @purchase_delivery_address = PurchaseDeliveryAddress.new
+    if @item.user_id != current_user.id && @item.purchase == nil
+      @purchase_delivery_address = PurchaseDeliveryAddress.new
+    else
+      redirect_to root_path
+    end
   end
 
   def create
