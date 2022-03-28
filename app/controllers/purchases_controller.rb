@@ -13,6 +13,7 @@ class PurchasesController < ApplicationController
   def create
     @purchase_delivery_address = PurchaseDeliveryAddress.new(purchase_params)
     if @purchase_delivery_address.valid?
+      pay_item
       @purchase_delivery_address.save
       redirect_to root_path
     else
@@ -25,5 +26,15 @@ class PurchasesController < ApplicationController
 
   def purchase_params
     params.require(:purchase_delivery_address).permit(:post_code, :prefecture_id, :city, :address, :building_name, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
+  end
+
+  def pay_item
+    item = Item.find(params[:item_id])
+    Payjp.api_key = "sk_test_96292b18a76d9ee06105dff0"  
+    Payjp::Charge.create(
+      amount: item.price, 
+      card: purchase_params[:token],    
+      currency: 'jpy'                 
+    )
   end
 end
