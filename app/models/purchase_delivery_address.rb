@@ -9,6 +9,7 @@ class PurchaseDeliveryAddress
     validates :city
     validates :address
     validates :phone_number, format: {with: /\A\d{10,11}\z/, message: "10桁か11桁の半角数値をハイフン(-)なしで入力してください"}
+    validates :token
   end
   validates :prefecture_id, numericality: {other_than: 1, message: "can't be blank"}
 
