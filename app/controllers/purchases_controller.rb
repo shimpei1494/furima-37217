@@ -1,8 +1,8 @@
 class PurchasesController < ApplicationController
   before_action :authenticate_user!, only: :index
+  before_action :set_item
 
   def index
-    @item = Item.find(params[:item_id])
     if @item.user_id != current_user.id && @item.purchase == nil
       @purchase_delivery_address = PurchaseDeliveryAddress.new
     else
@@ -17,7 +17,6 @@ class PurchasesController < ApplicationController
       @purchase_delivery_address.save
       redirect_to root_path
     else
-      @item = Item.find(params[:item_id])
       render :index
     end
   end
@@ -29,12 +28,15 @@ class PurchasesController < ApplicationController
   end
 
   def pay_item
-    item = Item.find(params[:item_id])
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"]  
     Payjp::Charge.create(
-      amount: item.price, 
+      amount: @item.price, 
       card: purchase_params[:token],    
       currency: 'jpy'                 
     )
+  end
+
+  def set_item
+    @item = Item.find(params[:item_id])
   end
 end
